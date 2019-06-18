@@ -5,76 +5,87 @@
 	<meta charset="utf-8">
 	<title>Untitled Document</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<link href="https://fonts.googleapis.com/css?family=Comfortaa:400,700&display=swap" rel="stylesheet">
+	<style>
+	.gfont {
+		font-family: 'Comfortaa', cursive;
+	}
+	</style>
 </head>
 
 <body>
+	<div class="container mt-5 jumbotron">
+	<h1 id="timer" class="text-center gfont text-primary">Timer Will Start After The First Question</h1>
+	<hr>
+	<p class="lead">Answer The Questions</p>
 
-	<h1 id="timer">Time Will Start After The First Question</h1>
-	<p>Answer The Questions</p>
-
+	<div id="ques" class="gfont"></div>
 	<div id="one"></div>
 	<div id="two"></div>
 	<div id="three"></div>
 	<div id="four"></div>
-	<div id="five"></div>
-	<div id="six"></div>
-
-	<button>submit</button>
+	<div id="open"></div>
+	<br>
+	<button class="btn btn-secondary">submit</button>
 	
-	<h2 id="answer-display"></h2>
+	<h2 id="answer-display" class="text-center gfont"></h2>
+	</div>
+
 	<script>
 
-		//$(document).ready(function(){
+		// array of questions and answers
 
 		let questions = [ 
 
 			{
-				question: "?",
+				question: "What javascript library uses a dollar sign?",
 				imgSrc: "img/html.png",
-				choiceA: "avalue",
-				choiceB: "bvalue",
-				choiceC: "cvalue",
-				choiceD: "dvalue",
-				correct: "avalue",
+				choiceA: "Jquery",
+				choiceB: "Promises",
+				choiceC: "React",
+				choiceD: "Angular",
+				correct: "Jquery",
 			},
 
 			{
-				question: "?",
+				question: "What is similar to a box for storing things?",
 				imgSrc: "img/html.png",
-				choiceA: "a",
-				choiceB: "b",
-				choiceC: "c",
-				choiceD: "d",
-				correct: "A",
+				choiceA: "function",
+				choiceB: "method",
+				choiceC: "variable",
+				choiceD: "loop",
+				correct: "variable",
 			},
 
 			{
-				question: "?",
+				question: "What updates the webpage without reloading the page?",
 				imgSrc: "img/html.png",
-				choiceA: "a",
-				choiceB: "b",
-				choiceC: "c",
-				choiceD: "d",
-				correct: "A",
+				choiceA: "SQL",
+				choiceB: "HTML",
+				choiceC: "XML",
+				choiceD: "Ajax",
+				correct: "Ajax",
 			},
 
 			{
-				question: "?",
+				question: "What can request data from a specified source thru an url?",
 				imgSrc: "img/html.png",
-				choiceA: "a",
-				choiceB: "b",
-				choiceC: "c",
-				choiceD: "d",
-				correct: "A",
+				choiceA: "FETCH",
+				choiceB: "GET",
+				choiceC: "FIND",
+				choiceD: "LOCATE",
+				correct: "GET",
 			},
 
 		]
-
-		let time = 10;	
+		
+		// variables used to keep score, time, and question count
+		let time = 29;	
 		let score = 0;
 		let question = 0;
 		
-		// timer
+		// ************** timer *********************//
 
 		function timeStarted(){
 			let stop = setInterval(timeUpdate, 1000);
@@ -89,31 +100,42 @@
 			}
 		} // outter function
 
-		// timer
+		// **************^ timer ^********************//
 
 		function showQuestions(i) {
 
+			// assigning question array to html element
+			$("#ques").html("<h2> " + questions[i].question + " </h2> <br>");
 			$("#one").html("<input type='radio' value=" + questions[i].choiceA + " > " + questions[i].choiceA + "</input> <br />");
 			$("#two").html("<input type='radio' value=" + questions[i].choiceB + " > " + questions[i].choiceB + "</input> <br />");
 			$("#three").html("<input type='radio' value=" + questions[i].choiceC + " > " + questions[i].choiceC + "</input> <br />");
 			$("#four").html("<input type='radio' value=" + questions[i].choiceD + " > " + questions[i].choiceD + "</input> <br />");
 		}
-
+		// button to evaluate the answer
 		$("button").on("click", function () {
 
+			// run the time function after user click the button
 			timeStarted();
+
+			// put user's choice in a variable
 			let checked = $("input[type='radio']:checked").val(); 
 
+			// if user's choice matches the correct answer
 			if (checked === questions[question].correct) {
 			
+				// display user has the correct answer
 				$("#answer-display").text("Hoorrayy!! You got the answer correct!");
+
+				// shows text for about 1 sec then goes away
 				setTimeout(function(){ 
 					$("#answer-display").text(""); 
 					}, 1200);
+				// update score and question count
 				score++;
 				question++;
 				if(question < questions.length){
 				setTimeout(function(){
+				// run question function to view next question
 					showQuestions(question);
 					}, 1000);
 				}
@@ -137,7 +159,7 @@
 				}
 			}
 		});
-
+		// starts the game by displaying the quesions 
 		showQuestions(question);
 	
 	</script>
