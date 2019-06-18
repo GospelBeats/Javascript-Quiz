@@ -1,0 +1,146 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>Untitled Document</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+</head>
+
+<body>
+
+	<h1 id="timer">Time Will Start After The First Question</h1>
+	<p>Answer The Questions</p>
+
+	<div id="one"></div>
+	<div id="two"></div>
+	<div id="three"></div>
+	<div id="four"></div>
+	<div id="five"></div>
+	<div id="six"></div>
+
+	<button>submit</button>
+	
+	<h2 id="answer-display"></h2>
+	<script>
+
+		//$(document).ready(function(){
+
+		let questions = [ 
+
+			{
+				question: "?",
+				imgSrc: "img/html.png",
+				choiceA: "avalue",
+				choiceB: "bvalue",
+				choiceC: "cvalue",
+				choiceD: "dvalue",
+				correct: "avalue",
+			},
+
+			{
+				question: "?",
+				imgSrc: "img/html.png",
+				choiceA: "a",
+				choiceB: "b",
+				choiceC: "c",
+				choiceD: "d",
+				correct: "A",
+			},
+
+			{
+				question: "?",
+				imgSrc: "img/html.png",
+				choiceA: "a",
+				choiceB: "b",
+				choiceC: "c",
+				choiceD: "d",
+				correct: "A",
+			},
+
+			{
+				question: "?",
+				imgSrc: "img/html.png",
+				choiceA: "a",
+				choiceB: "b",
+				choiceC: "c",
+				choiceD: "d",
+				correct: "A",
+			},
+
+		]
+
+		let time = 10;	
+		let score = 0;
+		let question = 0;
+		
+		// timer
+
+		function timeStarted(){
+			let stop = setInterval(timeUpdate, 1000);
+
+			function timeUpdate(){
+			$("#timer").text(time--);
+			if (time < 0){
+			clearInterval(stop);
+			alert("You ran out of time! " + "You got " + score + " right out of " + questions.length);
+			location.reload();
+				}
+			}
+		} // outter function
+
+		// timer
+
+		function showQuestions(i) {
+
+			$("#one").html("<input type='radio' value=" + questions[i].choiceA + " > " + questions[i].choiceA + "</input> <br />");
+			$("#two").html("<input type='radio' value=" + questions[i].choiceB + " > " + questions[i].choiceB + "</input> <br />");
+			$("#three").html("<input type='radio' value=" + questions[i].choiceC + " > " + questions[i].choiceC + "</input> <br />");
+			$("#four").html("<input type='radio' value=" + questions[i].choiceD + " > " + questions[i].choiceD + "</input> <br />");
+		}
+
+		$("button").on("click", function () {
+
+			timeStarted();
+			let checked = $("input[type='radio']:checked").val(); 
+
+			if (checked === questions[question].correct) {
+			
+				$("#answer-display").text("Hoorrayy!! You got the answer correct!");
+				setTimeout(function(){ 
+					$("#answer-display").text(""); 
+					}, 1200);
+				score++;
+				question++;
+				if(question < questions.length){
+				setTimeout(function(){
+					showQuestions(question);
+					}, 1000);
+				}
+				else{alert("Quiz Complete! " + "You got " + score + " right out of " + questions.length);
+				location.reload();
+				}
+			}
+			else {
+				$("#answer-display").text("Sorry!! You got the answer incorrect!");
+				setTimeout(function(){ 
+					$("#answer-display").text(""); 
+					}, 1200);
+				question++;
+				if(question < questions.length){
+					setTimeout(function(){
+					showQuestions(question);
+					}, 1000);
+				}
+				else{alert("Quiz Complete! " + "You got " + score + " right out of " + questions.length);
+				location.reload();
+				}
+			}
+		});
+
+		showQuestions(question);
+	
+	</script>
+</body>
+
+</html>
